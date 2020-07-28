@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/constants.dart';
 
+import 'package:rounded_checkbox/rounded_checkbox.dart';
+
 class TaskTile extends StatefulWidget {
 
   @override
@@ -17,9 +19,10 @@ class _TaskTileState extends State<TaskTile> {
         'This is a task',
         style: TextStyle(decoration: isChecked? TextDecoration.lineThrough : null),
       ),
-      trailing: TaskCheckBox(
-        checkBoxState: isChecked,
-        toggleCheckboxState: (bool newValue){
+      trailing: RoundedCheckbox(
+        edgeRadius: Radius.circular(9),
+        value: isChecked,
+        onChanged: (bool newValue){
           setState(() {
             isChecked = newValue;
           });

@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  rounded_checkbox:
+    path: packages/rounded_checkbox
 
 
   # The following adds the Cupertino Icons font to your application.
