@@ -40,7 +40,7 @@ class RoundedCheckbox extends StatefulWidget {
     this.visualDensity,
     this.focusNode,
     this.autofocus = false,
-    this.edgeRadius,
+    this.edgeRadius = const Radius.circular(1.0),
   }) : assert(tristate != null),
         assert(tristate || value != null),
         assert(autofocus != null),
@@ -153,7 +153,7 @@ class RoundedCheckbox extends StatefulWidget {
   /// The width of a checkbox widget.
   static const double width = 18.0;
 
-  final double edgeRadius;
+  final Radius edgeRadius;
 
   @override
   _RoundedCheckboxState createState() => _RoundedCheckboxState();
@@ -335,7 +335,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
 
 const double _kEdgeSize = RoundedCheckbox.width;
 /// TO DO: use provided edge radius
-Radius _kEdgeRadius = Radius.circular(1.0);
+// Radius _kEdgeRadius = Radius.circular(1.0);
 const double _kStrokeWidth = 2.0;
 
 class _RenderCheckbox extends RenderToggleable {
@@ -394,7 +394,7 @@ class _RenderCheckbox extends RenderToggleable {
     final double inset = 1.0 - (t - 0.5).abs() * 2.0;
     final double size = _kEdgeSize - inset * _kStrokeWidth;
     final Rect rect = Rect.fromLTWH(origin.dx + inset, origin.dy + inset, size, size);
-    return RRect.fromRectAndRadius(rect, _kEdgeRadius);
+    return RRect.fromRectAndRadius(rect, edgeRadius);
   }
 
   // The checkbox's border color if value == false, or its fill color when
