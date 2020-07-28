@@ -251,7 +251,7 @@ class _RoundedCheckboxState extends State<RoundedCheckbox> with TickerProviderSt
             vsync: this,
             hasFocus: _focused,
             hovering: _hovering,
-
+            edgeRadius: widget.edgeRadius,
           );
         },
       ),
@@ -294,7 +294,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
   final ValueChanged<bool> onChanged;
   final TickerProvider vsync;
   final BoxConstraints additionalConstraints;
-  final double edgeRadius;
+  final Radius edgeRadius;
 
   @override
   _RenderCheckbox createRenderObject(BuildContext context) => _RenderCheckbox(
@@ -370,7 +370,7 @@ class _RenderCheckbox extends RenderToggleable {
 
   bool _oldValue;
   Color checkColor;
-  double edgeRadius;
+  Radius edgeRadius;
 
   @override
   set value(bool newValue) {
