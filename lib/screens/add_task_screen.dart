@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todoey_flutter/constants.dart';
 
+String newTaskTitle;
+
 class AddTaskScreen extends StatelessWidget {
+  AddTaskScreen({this.addTaskCallback});
+  final Function addTaskCallback;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,8 +43,12 @@ class AddTaskScreen extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Icon(
-                  Icons.clear,
+                IconButton(
+
+                  icon: Icon(Icons.clear),
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),
@@ -51,7 +60,9 @@ class AddTaskScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextField(
+                  TextField(onChanged: (newTask){
+                    newTaskTitle = newTask;
+                  },
                     textAlign: TextAlign.center,
                     autofocus: true,
                     decoration:
@@ -78,7 +89,10 @@ class AddTaskScreen extends StatelessWidget {
               ),
             ),
             FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                addTaskCallback(newTaskTitle);
+                Navigator.pop(context);
+              },
               child: Text(
                 'Save',
                 style: TextStyle(
