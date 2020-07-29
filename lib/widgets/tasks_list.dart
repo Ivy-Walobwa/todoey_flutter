@@ -1,32 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/constants.dart';
 import 'task_tile.dart';
-import 'package:todoey_flutter/models/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/tasks_data.dart';
 
-class TasksList extends StatefulWidget {
-  TasksList({this.tasks});
-  final List<Task> tasks;
-
-  @override
-  _TasksListState createState() => _TasksListState();
-}
-
-class _TasksListState extends State<TasksList> {
-
+class TasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return TaskTile(
-          taskTitle: widget.tasks[index].name,
-          isChecked: widget.tasks[index].isDone,
-          checkboxCallback: (newValue) {
-            setState(() {
-              widget.tasks[index].toggleDone();
-            });
+    return Consumer<TasksData>(
+      builder: (context, tasksData, child) {
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            final task = tasksData.tasks[index];
+            return Dismissible(
+              background: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.delete_forever,
+                    color: greyColor,
+                  ),
+                ],
+              ),
+              key: Key(task.name),
+              onDismissed: (direction) {
+                tasksData.deleteTask(index);
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: warnColor,
+                    content: Text("${task.name} deleted"),
+                  ),
+                );
+              },
+              child: TaskTile(
+                taskTitle: task.name,
+                isChecked: task.isDone,
+                checkboxCallback: (newValue) {
+                  tasksData.updateTask(task);
+                },
+              ),
+            );
           },
+          itemCount: tasksData.tasksLength,
         );
       },
-      itemCount: widget.tasks.length,
     );
   }
 }

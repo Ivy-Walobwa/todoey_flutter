@@ -2,13 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todoey_flutter/constants.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/tasks_data.dart';
 
 String newTaskTitle;
 
 class AddTaskScreen extends StatelessWidget {
-  AddTaskScreen({this.addTaskCallback});
-  final Function addTaskCallback;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -90,7 +89,7 @@ class AddTaskScreen extends StatelessWidget {
             ),
             FlatButton(
               onPressed: () {
-                addTaskCallback(newTaskTitle);
+                Provider.of<TasksData>(context, listen: false).addTask(newTaskTitle);
                 Navigator.pop(context);
               },
               child: Text(

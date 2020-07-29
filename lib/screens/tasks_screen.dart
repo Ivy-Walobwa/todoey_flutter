@@ -3,21 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todoey_flutter/constants.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/tasks_data.dart';
 
 import 'add_task_screen.dart';
-import 'package:todoey_flutter/models/task.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'buy bread'),
-    Task(name: 'buy bread'),
-    Task(name: 'Buy eggs'),
-  ];
+class TasksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +27,7 @@ class _TasksScreenState extends State<TasksScreen> {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskScreen(
-                  addTaskCallback: (newTaskTitle) {
-                    setState(
-                      () {
-                        tasks.add(Task(name: newTaskTitle,),);
-                      },
-                    );
-                  },
-                ),
+                child: AddTaskScreen(),
               ),
             ),
           );
@@ -83,7 +66,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length} tasks today',
+                  '${Provider.of<TasksData>(context).tasksLength} tasks today',
                   style: TextStyle(
                     color: Color(0xffD4E2FB),
                     fontSize: 18.0,
@@ -102,9 +85,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(
-                tasks: tasks,
-              ),
+              child: TasksList(),
             ),
           ),
         ],
@@ -112,3 +93,4 @@ class _TasksScreenState extends State<TasksScreen> {
     );
   }
 }
+
