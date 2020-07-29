@@ -3,47 +3,27 @@ import 'package:todoey_flutter/constants.dart';
 
 import 'package:rounded_checkbox/rounded_checkbox.dart';
 
-class TaskTile extends StatefulWidget {
+class TaskTile extends StatelessWidget {
+  TaskTile({this.isChecked, this.taskTitle, this.checkboxCallback});
 
-  @override
-  _TaskTileState createState() => _TaskTileState();
-}
-
-class _TaskTileState extends State<TaskTile> {
-  bool isChecked = false;
+  final bool isChecked;
+  final String taskTitle;
+  final Function checkboxCallback;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        'This is a task',
+        taskTitle,
         style: TextStyle(decoration: isChecked? TextDecoration.lineThrough : null),
       ),
       trailing: RoundedCheckbox(
-        edgeRadius: Radius.circular(9),
+        activeColor: blueColor,
+        edgeRadius: Radius.circular(5),
         value: isChecked,
-        onChanged: (bool newValue){
-          setState(() {
-            isChecked = newValue;
-          });
-        },
+        onChanged: checkboxCallback,
       ),
     );
   }
 }
 
-class TaskCheckBox extends StatelessWidget {
-
-  TaskCheckBox({this.checkBoxState, this.toggleCheckboxState});
-  final bool checkBoxState;
-  final Function toggleCheckboxState;
-
-  @override
-  Widget build(BuildContext context) {
-    return Checkbox(
-      activeColor: blueColor,
-      value: checkBoxState,
-      onChanged: toggleCheckboxState,
-    );
-  }
-}
