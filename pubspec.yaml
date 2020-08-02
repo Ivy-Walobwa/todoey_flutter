@@ -26,6 +26,10 @@ dependencies:
   rounded_checkbox:
     path: packages/rounded_checkbox
   provider: ^4.3.1
+  flutter_rounded_date_picker: ^1.0.4
+  flutter_localizations:
+    sdk: flutter
+  jiffy: ^3.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

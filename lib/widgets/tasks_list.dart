@@ -13,6 +13,7 @@ class TasksList extends StatelessWidget {
           itemBuilder: (context, index) {
             final task = tasksData.tasks[index];
             return Dismissible(
+              key: UniqueKey(),
               background: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -23,7 +24,6 @@ class TasksList extends StatelessWidget {
                   ),
                 ],
               ),
-              key: Key(task.name),
               onDismissed: (direction) {
                 tasksData.deleteTask(index);
                 Scaffold.of(context).showSnackBar(

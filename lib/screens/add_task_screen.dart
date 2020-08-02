@@ -4,8 +4,11 @@ import 'package:flutter/widgets.dart';
 import 'package:todoey_flutter/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey_flutter/models/tasks_data.dart';
+import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:jiffy/jiffy.dart';
 
 String newTaskTitle;
+DateTime newDateTime;
 
 class AddTaskScreen extends StatelessWidget {
   @override
@@ -69,13 +72,24 @@ class AddTaskScreen extends StatelessWidget {
                   ),
                   FlatButton.icon(
                     padding: EdgeInsets.all(0.0),
-                    onPressed: null,
+                    onPressed: ()async{
+                      newDateTime = await showRoundedDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(DateTime.now().year - 1),
+                        lastDate: DateTime(DateTime.now().year + 1),
+                        borderRadius: 16,
+                        theme: ThemeData(
+                          primaryColor: blueColor,
+                        ),
+                      );
+                    },
                     icon: Icon(
                       Icons.notifications_none,
                       color: blueColor,
                     ),
                     label: Text(
-                      'July 28, 16:00',
+                      '${newDateTime!=null ? Jiffy('$newDateTime').yMMMd : 'pick date'}',
                     ),
                   ),
                   FlatButton.icon(
@@ -89,6 +103,10 @@ class AddTaskScreen extends StatelessWidget {
             ),
             FlatButton(
               onPressed: () {
+                if(newTaskTitle == null){
+                  Navigator.pop(context);
+                  return;
+                }
                 Provider.of<TasksData>(context, listen: false).addTask(newTaskTitle);
                 Navigator.pop(context);
               },
